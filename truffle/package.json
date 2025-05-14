@@ -1,0 +1,38 @@
+{
+  "name": "truffle-project",
+  "version": "0.1.0",
+  "description": "Truffle project with SimpleStorage contract",
+  "scripts": {
+    "test": "truffle test",
+    "postinstall": "mkdir client\\src\\abis && copy build\\contracts\\SecureStablecoin.json client\\src\\abis\\",
+    "copy-abi": "copy build\\contracts\\SecureStablecoin.json client\\src\\abis\\"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.9.3",
+    "@truffle/hdwallet-provider": "^2.1.7"
+  },
+  "devDependencies": {
+    "@truffle/contract": "^4.0.31",
+    "@truffle/ganache": "^7.10.0",
+    "@truffle/solidity-coverage": "^0.8.0",
+    "truffle": "^5.8.2"
+  },
+  "truffle": {
+    "version": "5.8.2",
+    "compiler": {
+      "version": "^0.8.0"
+    },
+    "networks": {
+      "development": {
+        "host": "localhost",
+        "port": 8545,
+        "network_id": "*"
+      }
+    },
+    "migrations_directory": "./migrations",
+    "contracts_directory": "./contracts",
+    "build_directory": "./build/contracts"
+  },
+  "author": "",
+  "license": "ISC"
+}
