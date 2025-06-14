@@ -1,10 +1,14 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const EslintWebpackPlugin = require("eslint-webpack-plugin");
-
-const extensions = [".js", ".jsx"];
+/** @type {import('tailwindcss').Config} */
+const extensions = [".js", ".jsx", ".mjs"];
 
 module.exports = {
+  // theme: {
+  //   extend: {},
+  // },
+  plugins: [],
   mode: process.env.NODE_ENV === "production" ? "production" : "development",
   entry: "./src/index.jsx",
   output: {
@@ -12,6 +16,7 @@ module.exports = {
   },
   resolve: { extensions },
   devServer: {
+    historyApiFallback: true,
     client: {
       overlay: false,
     },

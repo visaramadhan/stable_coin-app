@@ -1,0 +1,403 @@
+/* RESET DAN STANDAR */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Inter', sans-serif;
+  scroll-behavior: smooth;
+  background-color: #F4F6FA;
+  color: #1E293B;
+  overflow-x: hidden;
+  line-height: 1.75;
+  font-size: 18px;
+}
+
+/* CONTAINER REGISTER */
+.register-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #FBCFE8 0%, #A5F3FC 100%);
+  padding: 32px;
+}
+
+.register-box {
+  background-color: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.1);
+  padding: 64px 48px;
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* HEADER */
+.app-header h1 {
+  font-size: 32px;
+  font-weight: 800;
+  color: #7C3AED;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.app-header h3 {
+  font-size: 18px;
+  color: #64748B;
+  text-align: center;
+  font-weight: 500;
+  margin-bottom: 24px;
+}
+
+/* TITLE */
+.register-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1E293B;
+  text-align: center;
+}
+
+/* FORM */
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.register-form label {
+  font-size: 16px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.register-form input {
+  padding: 14px 20px;
+  border-radius: 12px;
+  border: 1px solid #CBD5E1;
+  font-size: 16px;
+  font-weight: 500;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.register-form input:focus {
+  outline: none;
+  border-color: #7C3AED;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
+}
+
+/* BUTTON */
+.register-btn {
+  margin-top: 12px;
+  background-color: #7C3AED;
+  color: #ffffff;
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.register-btn:hover {
+  background-color: #6D28D9;
+}
+
+/* ERROR */
+.register-error {
+  color: #DC2626;
+  font-weight: 600;
+  background-color: #FEE2E2;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* LINK */
+.register-login-link {
+  font-size: 14px;
+  text-align: center;
+  color: #475569;
+}
+
+.register-login-link .link {
+  color: #2563EB;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.register-login-link .link:hover {
+  text-decoration: underline;
+}
+.form-group {
+  margin-bottom: 1rem;
+}
+label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: 500;
+}
+input {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
+/* CONTAINER */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 64px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 96px;
+}
+
+/* HEADER */
+.header {
+  font-size: 72px;
+  font-weight: 800;
+  color: #1E293B;
+  line-height: 1.1;
+}
+
+.subheader {
+  font-size: 28px;
+  font-weight: 500;
+  color: #64748B;
+  max-width: 800px;
+}
+
+/* SECTION */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.transaction-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  font-size: 14px;
+}
+
+.transaction-table th,
+.transaction-table td {
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  text-align: left;
+}
+
+.transaction-table th {
+  background-color: #f0f0f0;
+}
+
+.profile-section {
+  padding: 1rem;
+}
+.hash-result {
+  background-color: #f2f2f2;
+  border-left: 4px solid #8884d8;
+  padding: 1rem;
+  margin-top: 1rem;
+  font-family: monospace;
+  word-break: break-word;
+}
+
+/* CARD GRID */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 48px;
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+}
+
+.card h3 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #A78BFA;
+  margin-bottom: 12px;
+}
+
+.card h2 {
+  font-size: 40px;
+  font-weight: 800;
+  color: #1E293B;
+  margin-bottom: 12px;
+}
+
+.card p {
+  font-size: 18px;
+  color: #475569;
+}
+
+/* SECTION HIGHLIGHT */
+.section-highlight {
+  background: linear-gradient(135deg, #FBCFE8 0%, #A78BFA 100%);
+  border-radius: 24px;
+  padding: 80px 48px;
+  text-align: center;
+  color: #1E293B;
+}
+
+.section-highlight h2 {
+  font-size: 48px;
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+.section-highlight p {
+  font-size: 24px;
+  font-weight: 500;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* FOOTER */
+.footer {
+  text-align: center;
+  font-size: 16px;
+  color: #94A3B8;
+  padding: 32px 16px;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  margin-top: 64px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .header {
+    font-size: 48px;
+  }
+
+  .subheader {
+    font-size: 20px;
+  }
+
+  .section-highlight {
+    padding: 48px 24px;
+  }
+
+  .section-highlight h2 {
+    font-size: 36px;
+  }
+
+  .card h2 {
+    font-size: 32px;
+  }
+
+  .card p {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    font-size: 36px;
+  }
+
+  .subheader {
+    font-size: 18px;
+  }
+
+  .section-highlight h2 {
+    font-size: 28px;
+  }
+
+  .card h2 {
+    font-size: 24px;
+  }
+
+  .card p {
+    font-size: 14px;
+  }
+}
+
+/* HASHTED TRANSFER FORM */
+.hashed-transfer-container {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border-radius: 12px;
+  background-color: #f9fafb;
+  box-shadow: 0 4px 8px rgb(0 0 0 / 0.1);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.hashed-transfer-form label {
+  display: block;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.hashed-transfer-form input,
+.hashed-transfer-form select {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  margin-top: 0.3rem;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.hashed-transfer-form input:focus,
+.hashed-transfer-form select:focus {
+  border-color: #5b84f7;
+  outline: none;
+}
+
+.btn-submit,
+.btn-benchmark {
+  display: inline-block;
+  padding: 0.7rem 1.5rem;
+  margin-top: 1rem;
+  margin-right: 1rem;
+  border: none;
+  background-color: #5b84f7;
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-submit:hover,
+.btn-benchmark:hover {
+  background-color: #3a5bbf;
+}
+
+.hash-result, 
+.hash-avg {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background-color: #e0e7ff;
+  border-radius: 10px;
+  color: #1a237e;
+  word-break: break-word;
+}
+
+.benchmark-chart {
+  margin-top: 2rem;
+}
