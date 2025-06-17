@@ -8,16 +8,16 @@ import "./dashboard.css";
 
 const Dashboard = ({ onLogout }) => {
   const [userEmail, setUserEmail] = useState(null);
+  const [userUid, setUserUid] = useState(null);  // ⬅️ Tambahkan UID
   const [walletAddress, setWalletAddress] = useState(null);
-  const [balanceUsd, setBalanceUsd] = useState(null);
   const [balanceEth, setBalanceEth] = useState(null);
   const [activeSection, setActiveSection] = useState("home");
   const [isFetchingWallet, setIsFetchingWallet] = useState(false);
 
   const clearStates = () => {
     setUserEmail(null);
+    setUserUid(null);
     setWalletAddress(null);
-    setBalanceUsd(null);
     setBalanceEth(null);
   };
 
@@ -30,20 +30,6 @@ const Dashboard = ({ onLogout }) => {
       console.error("❌ Error saat logout:", error);
     }
   }, [onLogout]);
-
-  const fetchEthPrice = async () => {
-    try {
-      const response = await fetch(
-        "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd"
-      );
-      const data = await response.json();
-      const price = data?.ethereum?.usd;
-      return isNaN(price) ? null : price;
-    } catch (error) {
-      console.error("❌ Gagal fetch harga ETH:", error);
-      return null;
-    }
-  };
 
   const fetchWalletData = useCallback(async () => {
     if (isFetchingWallet) return;
@@ -79,12 +65,6 @@ const Dashboard = ({ onLogout }) => {
 
       setBalanceEth(eth.toFixed(4));
 
-      const price = await fetchEthPrice();
-      if (price) {
-        const usd = (eth * price).toFixed(2);
-        setBalanceUsd(`$${usd}`);
-      }
-
     } catch (error) {
       console.error("❌ Gagal ambil data wallet:", error);
     } finally {
@@ -98,6 +78,7 @@ const Dashboard = ({ onLogout }) => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUserEmail(user.email);
+        setUserUid(user.uid);  // ⬅️ Simpan UID
         fetchWalletData();
 
         timer = setTimeout(() => {
@@ -119,10 +100,10 @@ const Dashboard = ({ onLogout }) => {
       case "profile":
         return (
           <ProfileSection
+            uid={userUid}  // ⬅️ Kirim UID
             email={userEmail}
             address={walletAddress}
             balanceEth={balanceEth}
-            balanceUsd={balanceUsd}
           />
         );
       case "hash":
@@ -147,10 +128,6 @@ const Dashboard = ({ onLogout }) => {
                 <tr>
                   <td>Saldo (ETH)</td>
                   <td>| {balanceEth ?? "Loading..."}</td>
-                </tr>
-                <tr>
-                  <td>Saldo (USD)</td>
-                  <td>| {balanceUsd ?? "Loading..."}</td>
                 </tr>
               </tbody>
             </table>

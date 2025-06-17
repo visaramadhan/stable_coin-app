@@ -1,32 +1,31 @@
 import { useState, useEffect } from "react";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../firebaseconfig"; // path ke konfigurasi Firebase-mu
+import { doc, getDoc } from "firebase/firestore";
+import { auth, db } from "../firebaseconfig";
 
-export default function useAddressEmailMap() {
-  const [map, setMap] = useState({});
+export default function useUserData() {
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    const fetchMap = async () => {
+    const fetchUserData = async () => {
+      const currentUser = auth.currentUser;
+      if (!currentUser) return;
+
       try {
-        const snapshot = await getDocs(collection(db, "user")); // ambil semua dokumen dari koleksi users
-        const tempMap = {};
+        const docRef = doc(db, "user", currentUser.uid);
+        const snapshot = await getDoc(docRef);
 
-        snapshot.forEach((doc) => {
-          const data = doc.data();
-          if (data.ganacheAddress && data.email) {
-            // simpan dengan lowercase biar konsisten saat dicari
-            tempMap[data.ganacheAddress.toLowerCase()] = data.email;
-          }
-        });
-
-        setMap(tempMap);
+        if (snapshot.exists()) {
+          setUserData(snapshot.data());
+        } else {
+          console.warn("⚠️ Data user tidak ditemukan.");
+        }
       } catch (error) {
-        console.error("❌ Gagal ambil mapping address-email dari Firestore:", error);
+        console.error("❌ Gagal ambil data user dari Firestore:", error);
       }
     };
 
-    fetchMap();
+    fetchUserData();
   }, []);
 
-  return map;
+  return userData;
 }

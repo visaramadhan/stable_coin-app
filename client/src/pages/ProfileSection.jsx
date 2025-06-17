@@ -1,64 +1,46 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import {
   collection,
-  getDocs,
-  query,
-  where,
+  getDocs
 } from "firebase/firestore";
-import { db } from "../firebaseconfig.jsx";
-import useAddressEmailMap from "../hooks/useAddressEmailMap";
+import { auth, db } from "../firebaseconfig.jsx";
 
-const ProfileSection = ({ email, address, balanceEth, balanceUsd }) => {
+const ProfileSection = ({ email, address, balanceEth }) => {
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(false);
-  const addressEmailMap = useAddressEmailMap();
 
-  const fetchTransactions = async () => {
-    if (!email) return;
+  const fetchTransactions = useCallback(async () => {
+    const currentUser = auth.currentUser;
+    if (!currentUser) {
+      console.warn("⚠️ Tidak ada user login");
+      return;
+    }
 
     setLoading(true);
     try {
-      // Temukan user berdasarkan email login
-      const userQuery = query(collection(db, "user"), where("email", "==", email));
-      const snapshot = await getDocs(userQuery);
-
-      if (snapshot.empty) {
-        console.warn("🔍 User tidak ditemukan untuk email:", email);
-        setTransactions([]);
-        setLoading(false);
-        return;
-      }
-
-      const userDoc = snapshot.docs[0];
-      const userDocId = userDoc.id;
-
-      // Ambil transaksi dari subcollection "transaction"
+      const userDocId = currentUser.uid;
       const transaksiRef = collection(db, "user", userDocId, "transaction");
       const transaksiSnapshot = await getDocs(transaksiRef);
 
-      const transaksiData = transaksiSnapshot.docs.map(doc => ({
+      const transaksiData = transaksiSnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
 
-      // Urutkan dari terbaru
-      transaksiData.sort((a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
+      transaksiData.sort(
+        (a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0)
+      );
       setTransactions(transaksiData);
     } catch (err) {
       console.error("❌ Gagal mengambil transaksi:", err);
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchTransactions();
-  }, [email]);
-
-  const displayEmail = (addr) => {
-    if (!addr) return "-";
-    return addressEmailMap[addr.toLowerCase()] || addr;
-  };
+  }, [fetchTransactions]);
 
   if (!address) {
     return <p>🔄 Memuat data profil... (alamat wallet belum tersedia)</p>;
@@ -83,10 +65,6 @@ const ProfileSection = ({ email, address, balanceEth, balanceUsd }) => {
               <td>Saldo (ETH)</td>
               <td>| {balanceEth ?? "Loading..."} ETH</td>
             </tr>
-            <tr>
-              <td>Saldo (USD)</td>
-              <td>| {balanceUsd ?? "Loading..."}</td>
-            </tr>
           </tbody>
         </table>
       </div>
@@ -106,7 +84,7 @@ const ProfileSection = ({ email, address, balanceEth, balanceUsd }) => {
             <thead>
               <tr>
                 <th>Hash</th>
-                <th>To (Email)</th>
+                <th>To (Alamat)</th>
                 <th>Amount</th>
                 <th style={{ maxWidth: 100 }}>Hash Type</th>
                 <th>Timestamp</th>
@@ -115,11 +93,11 @@ const ProfileSection = ({ email, address, balanceEth, balanceUsd }) => {
             <tbody>
               {transactions.map((tx) => (
                 <tr key={tx.id}>
-                  <td style={{ maxWidth: 300,wordWrap: "break-word" }}>{tx.hash}</td>
-                  <td>{displayEmail(tx.recipient)}</td>
+                  <td style={{ maxWidth: 300, wordWrap: "break-word" }}>{tx.hash}</td>
+                  <td>{tx.recipient}</td>
                   <td>{tx.amount}</td>
-                  <td style={{ maxWidth: 200 ,wordWrap: "break-word" }}>{tx.hashType}</td>
-                  <td style={{ maxWidth: 300,wordWrap: "break-word" }}>
+                  <td style={{ maxWidth: 200, wordWrap: "break-word" }}>{tx.hashType}</td>
+                  <td style={{ maxWidth: 300, wordWrap: "break-word" }}>
                     {tx.timestamp?.seconds
                       ? new Date(tx.timestamp.seconds * 1000).toLocaleString()
                       : "-"}
